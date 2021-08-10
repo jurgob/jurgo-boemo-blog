@@ -44,11 +44,9 @@ const Bio = () => {
       />
       {author?.name && (
         <p>
-           My name is <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
-          <a href={`https://developer.nexmo.com/conversation/overview`} >
-            Check it out
-          </a>
+           My name is <strong>{author.name}</strong> I m a Node.js developer working in Vonage. 
+           I'm in the team doing the <a href={`https://developer.nexmo.com/conversation/overview`} >Conversation API</a> and I try to convince people that is a good idea.
+          {` `} That's my tech blog.
         </p>
       )}
     </div>
