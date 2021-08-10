@@ -47,12 +47,15 @@ const BlogIndex = ({ data, location }) => {
                   <small>{post.frontmatter.date}</small>
                 </header>
                 <section>
-                  <p
+                  <span
                     dangerouslySetInnerHTML={{
                       __html: post.frontmatter.description || post.excerpt,
                     }}
                     itemProp="description"
                   />
+                  <span>{' '}{' '}<Link to={post.fields.slug} itemProp="url">
+                      <span>Read More</span>
+                    </Link></span>
                 </section>
               </article>
             </li>
