@@ -1,6 +1,6 @@
 ---
   slug: "/posts/nodejs-audio-lesson-1-enter-the-mic/"
-  date: 2021-08-03
+  date: 2021-08-03 20:15
   title: "nodejs audio lesson 1: enter the mic"
   draft: false
   description: "In my work at Vonage I deal with audio a lot. Despite this, I m very far from being an audio expert. I don’t work with the details or even with the media part, so I decided to do some experiment to…"

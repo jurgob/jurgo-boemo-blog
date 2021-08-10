@@ -1,6 +1,6 @@
 ---
   slug: "/posts/work-with-audio-in-node-js/"
-  date: 2021-08-02
+  date: 2021-08-02 19:19
   title: "Nodejs and Audio"
   draft: false
   description: "Hello, I m Jurgo and I work as a node.js developer at Vonage. What I do there is this Conversation API . Sometime I describe it as an “api for doing your own slack”. Because of this product…"

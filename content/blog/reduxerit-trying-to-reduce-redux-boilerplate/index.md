@@ -1,6 +1,6 @@
 ---
   slug: "/posts/reduxerit-trying-to-reduce-redux-boilerplate/"
-  date: 2016-04-16
+  date: 2016-04-16 18:13
   title: "Reduxerit — trying to reduce redux boilerplate"
   draft: false
   description: "Basically, the idea is to easily create a reducer who expect an action with type [REDUCER_NAME]_SET_STATE. the payload of this action will be a partial state witch will be merged with the old state…"

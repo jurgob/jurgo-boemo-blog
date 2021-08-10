@@ -10,8 +10,8 @@ module.exports = {
         date
           .getDate()
           .toString()
-          .padStart(2, 0); //2018-04-16
-      
+          .padStart(2, 0) + //2018-04-16
+        ` ${date.getHours().toString().padStart(2, 0)}:${date.getMinutes()}`;
       var template = `\
 ---
   slug: "/posts/${data.titleForSlug}/"

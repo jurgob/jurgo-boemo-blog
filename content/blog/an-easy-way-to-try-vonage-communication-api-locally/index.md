@@ -1,6 +1,6 @@
 ---
   slug: "/posts/an-easy-way-to-try-vonage-communication-api-locally/"
-  date: 2021-08-08
+  date: 2021-08-08 16:37
   title: "An easy way to try Vonage Communication API locally"
   draft: false
   description: "Our product is often involving real time communication, so is a bidirectional communication. Is making easy to do very complicated stuff like managing phone call, audio, sms, IM messages (whatsapp…"
