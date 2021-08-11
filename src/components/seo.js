@@ -70,6 +70,10 @@ const Seo = ({ description, lang, meta, title }) => {
           name: `twitter:description`,
           content: metaDescription,
         },
+        {
+          name: `mobile-web-app-capable`,
+          content: "yes",
+        },
       ].concat(meta)}
     />
   )
