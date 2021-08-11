@@ -9,16 +9,16 @@ const Layout = ({ location, title, children }) => {
     <div>
       <h1 className="main-heading">
         <Link to="/">{title}</Link>
-        {/* <StaticImage
+        <StaticImage
           className="header-logo"
           layout="fixed"
           formats={["AUTO", "WEBP", "AVIF"]}
           src="../images/casual-programming-logo-inverted2.png"
-          width={26}
-          height={28}
+          width={34}
+          height={32}
           quality={95}
           alt=""
-        />   */}
+        />  
       </h1>
       
     </div>

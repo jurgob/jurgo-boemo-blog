@@ -295,6 +295,7 @@ a:focus {
 }
 .header-logo {
   float:right;
+  margin-top: 8px;
 }
 
 
