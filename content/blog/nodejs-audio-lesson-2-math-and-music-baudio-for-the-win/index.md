@@ -1,7 +1,7 @@
 ---
   slug: "/posts/nodejs-audio-lesson-2-math-and-music-baudio-for-the-win/"
-  date: 2021-08-03 20:14
-  title: "Nodejs audio lesson 2: Ear your voice from your speakers"
+  date: 2021-08-03 20:24
+  title: "Nodejs audio, lesson 2: ear your voice from your speakers"
   draft: false
   description: "In the previous lesson we did the setup of our project, and we learned how to acquire audio from our mic and dump it into a file. remember, to make this package work, you neet to be sure you have…"
   categories: []

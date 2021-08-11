@@ -1,7 +1,7 @@
 ---
   slug: "/posts/lesson-5-make-a-phone-call-to-your-laptop-with-vonage-api/"
   date: 2021-08-08 01:57
-  title: "Lesson 5- Make a phone call to your laptop with Vonage API"
+  title: "Nodejs audio, lesson 5: make a phone call to your laptop with Vonage API"
   draft: false
   description: "In lesson1 and lesson2 we saw how to use row audio in nodejs, and how to use your mic and speaker. 
 Today we are gonna see how to make this audio going over the internet and connect it to a mobile…"

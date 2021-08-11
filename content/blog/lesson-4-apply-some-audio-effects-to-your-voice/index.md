@@ -1,7 +1,7 @@
 ---
   slug: "/posts/lesson-4-apply-some-audio-effects-to-your-voice/"
   date: 2021-08-04 02:33
-  title: "Lesson 4: Apply some audio effects to your voice"
+  title: "Nodejs audio, lesson 4: apply some audio effects to your voice"
   draft: false
   description: "As we learned in lesson 1 and lesson 2, your mic is a readable stream and your speakers are a writable stream, to make them work together you just need to pipe them. for this we are gonna put…"
   categories: []

@@ -1,7 +1,7 @@
 ---
   slug: "/posts/nodejs-audio-lesson-3-math-and-music-baudio-for-the-win/"
   date: 2021-08-04 00:30
-  title: "Nodejs audio lesson 3: Math and Music, baudio for the win"
+  title: "Nodejs audio, lesson 3: math and music, baudio for the win"
   draft: false
   description: "What is audio? in unix everything is a file, even programs and devices. the way those things comunicate with each other, are strings (or numbers in this case). that means basically you can “play”…"
   categories: []
