@@ -293,6 +293,10 @@ a:focus {
   text-decoration: none;
   font-size: var(--fontSize-2);
 }
+.header-logo {
+  float:right;
+}
+
 
 .bio {
   display: flex;

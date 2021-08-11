@@ -1,13 +1,27 @@
 import * as React from "react"
 import { Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 
 const Layout = ({ location, title, children }) => {
   const rootPath = `${__PATH_PREFIX__}/`
   const isRootPath = location.pathname === rootPath
   let header = (
-    <h1 className="main-heading">
-      <Link to="/">{title}</Link>
-    </h1>
+    <div>
+      <h1 className="main-heading">
+        <Link to="/">{title}</Link>
+        {/* <StaticImage
+          className="header-logo"
+          layout="fixed"
+          formats={["AUTO", "WEBP", "AVIF"]}
+          src="../images/casual-programming-logo-inverted2.png"
+          width={26}
+          height={28}
+          quality={95}
+          alt=""
+        />   */}
+      </h1>
+      
+    </div>
   )
 
   // if (isRootPath) {

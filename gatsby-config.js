@@ -5,10 +5,10 @@ module.exports = {
       name: `Jurgo Boemo`,
       summary: `I m a Node.js developer working in Vonage. I'm in the team doing the Conversation API and I try to convince people that is a good idea`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `Casual Programming, the Jurgo's tech blog.`,
+    siteUrl: `https://casual-programming.com/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `uselessclown`,
     },
   },
   plugins: [
@@ -113,11 +113,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Casual Programming`,
+        short_name: `CasualProgramming`,
         start_url: `/`,
         background_color: `#ffffff`,
-        theme_color: `#663399`,
+        theme_color: `#222`,
         display: `minimal-ui`,
         icon: `src/images/jurgo-pic.png`, // This path is relative to the root of the site.
       },

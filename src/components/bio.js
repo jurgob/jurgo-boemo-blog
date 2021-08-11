@@ -25,7 +25,7 @@ const Bio = () => {
 
   // Set these values by editing "siteMetadata" in gatsby-config.js
   const author = data.site.siteMetadata?.author
-
+  
   return (
     <div className="bio">
       <StaticImage
@@ -40,9 +40,9 @@ const Bio = () => {
       />
       {author?.name && (
         <p>
-           My name is <strong>{author.name}</strong> I m a Node.js developer working in Vonage. 
-           I'm in the team doing the <a href={`https://developer.nexmo.com/conversation/overview`} >Conversation API</a> and I try to convince people that is a good idea.
-          {` `} That's my tech blog.
+           My name is <strong>{author.name}</strong>. I'm a Node.js developer working in Vonage. 
+           My team does the <a href={`https://developer.nexmo.com/conversation/overview`} >Conversation API</a>, and I try to convince people it's a good idea.
+          {` `} This is my tech blog.
         </p>
       )}
     </div>
