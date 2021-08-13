@@ -12,6 +12,7 @@ module.exports = {
     },
   },
   plugins: [
+    `gatsby-plugin-feed`,
     `gatsby-plugin-mdx`,
     `gatsby-plugin-image`,
     {
@@ -135,6 +136,7 @@ module.exports = {
           'G-CW92132G4L', // Google Analytics / GA
         ],
       }
-    }
+    },
+    
   ],
 }
