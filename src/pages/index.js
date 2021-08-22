@@ -44,7 +44,7 @@ const BlogIndex = ({ data, location }) => {
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </h2>
-                  <small>{post.frontmatter.date}</small>
+                  <small>{`${post.frontmatter.date} - ${post.fields.readingTime.text} - words count: ${post.fields.readingTime.words}`}</small>
                 </header>
                 <section>
                   <span
@@ -80,6 +80,10 @@ export const pageQuery = graphql`
         excerpt
         fields {
           slug
+          readingTime {
+            text
+            words
+          }
         }
         frontmatter {
           date(formatString: "dddd, MMMM DD, YYYY LT")
