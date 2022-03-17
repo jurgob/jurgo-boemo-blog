@@ -10,9 +10,18 @@
   
 I work at Vonage , in the API department.
 
-Our product is often involving real time communication, so is a bidirectional communication. Is making easy to do very complicated stuff like managing phone call, audio, sms, IM messages (whatsapp, facebook, etc..) and much more.
+In there we do something called "Comunication API". 
+That's a set of apis that allows you to do stuff like sending / receiving , SMS, phone calls, create video, audio and text chat and so on. You can also do crasy stuff like make someone calling a phone number talking with someone connecting from his browser.
 
-It’s “easy” but not trivial, and the initial configuration and setup can be still pretty tricky for new developers.
+To test this, you need to set up several things. let's say you want to test how you can receive a voice call and say some text, and you want to do it locally. what you need to do is the following:
+
+1. register to nexmo and buy an LVN
+2. create an application
+3. configure your number to be connected to your application
+4. your "backend" is in your local machine as far as you are developing, so you need to expose is somehow with tools like localtunnel.
+5. configure your application to hit your public locatunnel address, so you can receive in your local application the vonage events.
+
+This is “easy” but not trivial, and the initial configuration and setup can be still pretty tricky for new developers.
 
 That’s why I’ve created this internal tool [https://github.com/jurgob/conversation-api-function](https://github.com/jurgob/conversation-api-function)
 
