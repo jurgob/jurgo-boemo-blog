@@ -13,7 +13,17 @@ I work at Vonage , in the API department.
 In there we do something called "Comunication API". 
 That's a set of apis that allows you to do stuff like sending / receiving , SMS, phone calls, create video, audio and text chat and so on. You can also do crasy stuff like make someone calling a phone number talking with someone connecting from his browser.
 
-To test this, you need to set up several things. let's say you want to test how you can receive a voice call and say some text, and you want to do it locally. what you need to do is the following:
+In this article I m gonna talk about a cli tool to quickly create prototypes app using those apis. 
+
+If I got your attention and your trust and you just want a quick install it and start to play, go here: [https://github.com/jurgob/conversation-api-function](https://github.com/jurgob/conversation-api-function) and follow the instructions. I estimate than in less then 20 min (10 if you are a node developer) you will have a working app. 
+If you have some more time, look also the `Examples` list to see how many thing you can do.
+You can stop reading this if you were seaching for a quick install guide :)
+
+If you want to know more, about the why and the what of this tool, keep reading. 
+
+### ***The Vonage configuration API fatigue***
+
+To test our comunication API, you need to set up several things. let's say you want to test how you can receive a voice call and say some text, and you want to do it locally. what you need to do is the following:
 
 1. register to nexmo and buy an LVN
 2. create an application
@@ -21,13 +31,17 @@ To test this, you need to set up several things. let's say you want to test how 
 4. your "backend" is in your local machine as far as you are developing, so you need to expose is somehow with tools like localtunnel.
 5. configure your application to hit your public locatunnel address, so you can receive in your local application the vonage events.
 
-This is “easy” but not trivial, and the initial configuration and setup can be still pretty tricky for new developers.
+after you do this, you can test a scenare where you reciave a PHONE call. 
+Let's say you want to try a PHONE to BROWSER scenario. That means you have to add the following steps: 
 
-That’s why I’ve created this internal tool [https://github.com/jurgob/conversation-api-function](https://github.com/jurgob/conversation-api-function)
+6. setup some frontend
+7. configure our sdk in your frontend
+8. typically set up some db for storing some state of your business app. 
 
-In this article I m gonna explain why I did this and what the tool is doing for you, but first I suggest you do the following:
+Those steps are “easy” but not a little time consuming, and the initial configuration and setup can be still pretty tricky for new developers.
 
-go to the link above, follow the instruction, call your Vonage phone number (you will have one after you follow the tutorial) and hear a computer voice telling you “hello world”. I bet you are gonna do everything in less then 20 minutes!. That’s just to keep you exited! If you have some more time, look also the `Examples` list to see how many thing you can do.
+Simplify this is the main reason I wrote this tool.
+
 
 ### **What the tool is doing for me? the short version**
 
