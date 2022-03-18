@@ -18,7 +18,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           nodes {
             id
             fields {
-              slug
+              slug,
+              draft
             }
           }
         }
@@ -41,10 +42,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // `context` is available in the template as a prop and as a variable in GraphQL
 
   if (posts.length > 0) {
-    posts.forEach((post, index) => {
+    posts
+    .forEach((post, index) => {
+      console.log(`post`, post)
       const previousPostId = index === 0 ? null : posts[index - 1].id
       const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
-
       createPage({
         path: post.fields.slug,
         component: blogPost,
@@ -110,6 +112,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
     type Fields {
       slug: String
+      draft: Boolean
     }
   `)
 }

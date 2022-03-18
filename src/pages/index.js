@@ -28,7 +28,10 @@ const BlogIndex = ({ data, location }) => {
       <Seo title="All posts" />
       <Bio />
       <ol style={{ listStyle: `none` }}>
-        {posts.map(post => {
+        {posts
+        .filter(post => !post.fields.draft)
+        .map(post => {
+          console.log(`show post`, post)
           const title = post.frontmatter.title || post.fields.slug
 
           return (
@@ -80,6 +83,7 @@ export const pageQuery = graphql`
         excerpt
         fields {
           slug
+          draft
           readingTime {
             text
             words
