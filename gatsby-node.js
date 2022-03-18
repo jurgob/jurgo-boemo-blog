@@ -42,11 +42,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // `context` is available in the template as a prop and as a variable in GraphQL
 
   if (posts.length > 0) {
-    posts
-    .forEach((post, index) => {
+    const notDraftPost = posts.filter(post => !post.fields.draft)
+    
+    notDraftPost.forEach((post, index) => {
       console.log(`post`, post)
-      const previousPostId = index === 0 ? null : posts[index - 1].id
-      const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
+      const previousPostId = index === 0 ? null : notDraftPost[index - 1].id
+      const nextPostId = index === notDraftPost.length - 1 ? null : notDraftPost[index + 1].id
       createPage({
         path: post.fields.slug,
         component: blogPost,
@@ -57,6 +58,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         },
       })
     })
+
+    posts
+    .filter(post => post.fields.draft)
+    .forEach((post, index) => {
+      console.log(`post draft `, post)
+      createPage({
+        path: post.fields.slug,
+        component: blogPost,
+        context: {
+          id: post.id
+        },
+      })
+    })
+
   }
 }
 
