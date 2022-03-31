@@ -31,7 +31,6 @@ const BlogIndex = ({ data, location }) => {
         {posts
         .filter(post => !post.fields.draft)
         .map(post => {
-          console.log(`show post`, post)
           const title = post.frontmatter.title || post.fields.slug
 
           return (

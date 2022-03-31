@@ -5,10 +5,27 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
+const BottomLink = ({href, text}) => <a  style={{ 
+  display:"inline-block", 
+  background: "#222222", 
+  color: "#fff", 
+  padding: "6px", 
+  borderRadius:"8px", 
+  textDecoration: "none",
+  fontWeight:"450"
+  }} href={href} target="_blank" rel="noopener noreferrer">
+  {text}
+</a>
+
+const Sep = () => <span style={{fontSize: "18px"}} >{" | "}</span>
+
 const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
+  console.log(`data`, data)
+  console.log(`data`, location.pathname)
+  const discussUrl = `https://mobile.twitter.com/search?q=${encodeURIComponent(`https://casual-programming.com${location.pathname}`)}`;
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -31,6 +48,11 @@ const BlogPostTemplate = ({ data, location }) => {
         />
         <hr />
         <footer>
+              <p style={{margin: "0px -20px 50px -20px"}} >
+                <BottomLink href={discussUrl} text="Discuss on Twitter" />
+                <Sep />
+                <BottomLink href="/rss.xml" text="Subscribe to RSS Feed" />
+              </p>
           <Bio />
         </footer>
       </article>
