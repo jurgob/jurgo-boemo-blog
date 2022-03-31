@@ -3,18 +3,18 @@
   date: 2021-08-02 19:19
   title: "Nodejs and Audio"
   draft: false
-  description: "Hello, I m Jurgo and I work as a node.js developer at Vonage. What I do there is this Conversation API . Sometime I describe it as an “api for doing your own slack”. Because of this product…"
+  description: "Hello, I m Jurgo and I work as a node.js developer at Vonage. What I do there is this Conversation API . Sometimes I describe it as an “api for doing your own slack”. Because of this product…"
   categories: []
   keywords: []
 ---
   
-Hello, I m Jurgo and I work as a node.js developer at Vonage. What I do there is this [Conversation API](https://developer.nexmo.com/conversation/overview) . Sometime I describe it as an “api for doing your own slack”.
+Hello, I m Jurgo and I work as a node.js developer at Vonage. What I do there is this [Conversation API](https://developer.nexmo.com/conversation/overview). Sometimes I describe it as **"an API for doing your own slack"**.
 
-Because of this product, sometimes I have to deal with audio. I found that audio is a very scaring topic in the beginning, mainly because of the lack of documentation.
+Because of this product, sometimes I have to deal with audio. I found that audio is a very scary topic in the beginning, mainly because of the lack of documentation.
 
-I m far from being an audio expert, but over the years I ‘ve managed to make some working code using the few audio related libraries you can find in NPM, so I ve decided to share this jurney in this series of articles
+I m far from being an audio expert, but over the years I‘ve managed to make some working code using the few audio-related libraries you can find in NPM, so I've decided to share what I've learned in this series of articles.
 
-This is gonna be our jurney:
+This is gonna be our journey:
 
 [Lesson 1: enter the mic](https://medium.com/@jurgo.boemo/nodejs-audio-lesson-1-enter-the-mic-9df64d0c1ad3)
 
