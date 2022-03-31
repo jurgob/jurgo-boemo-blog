@@ -41,7 +41,8 @@ Simplifying this is the main reason I wrote this tool.
 
 In the below picture, a schema of a typical app using Communication APIs, in this case using the so-called **Conversation API** and the **Voice API**. THere's also a front end using the **Client SDK**:
 
-![](https://developer.vonage.com/images/conversation-api/conv-app-setup.png)
+
+<img style="max-width: 600px; width: 100%" src="https://developer.vonage.com/images/conversation-api/conv-app-setup.png"  />
 
 
 ### **What the tool is doing for me? the short version**
