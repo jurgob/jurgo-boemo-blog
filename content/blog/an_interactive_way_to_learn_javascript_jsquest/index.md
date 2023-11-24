@@ -4,14 +4,14 @@
   title: "An interactive way to learn javascript: jsquest"
   draft: false
   description: "Do you want to learn javascript / test your javascript skills, but reading articles and books is not your cup of tea?
-  Here you go: https://jsquest.herokuapp.com/"
+  Here you go: https://jsquest.io"
   categories: []
   keywords: []
 ---
 
 Do you want to learn javascript / test your javascript skills, but reading articles and books is not your cup of tea?
 
-Here you go: https://jsquest.herokuapp.com/
+Here you go: https://jsquest.io
 
 That s all you need to know, go there and play with it, you will get it, the rest of the article is gonna just be some blah blah about why I did it and how.
 
@@ -29,7 +29,7 @@ That’s why my preferred guide for js is this one: http://xahlee.info/js/js.htm
 
 **February 2015,** my team leader at the time ask me to teach some javascript to our designer. Also, 3 friends of mine wanted to change their position at the same time, they were all JS developers. This is when I discover the [Xah Lee JS guide](http://xahlee.info/js/js.html) and I’ve started to use it to structure my lessons. I did with all of them several calls, i would say I’ve spent probably 20 hours with all of them to explain js fundamentals. The way I was doing this it was explaining them things via Skype and then Using a google docs to make them questions. In order to not have any misunderstanding, the questions were js code. And they had to respond with the result of the code execution. I call it *“forcing people to understand"*.
 
-**October 2016,** another couple of people heard about those “courses” and they would love the idea of doing them but as you can imagine, is not easy to dedicate around 20 hours per person and everyone is busy, so is hard to get organized. Is also not particular pleasant to get lessons from me, patience is not exactly my best quality. That s when I’ve decided to do [jsquest](https://jsquest.herokuapp.com/), taking inspiration from all the moments I told you.
+**October 2016,** another couple of people heard about those “courses” and they would love the idea of doing them but as you can imagine, is not easy to dedicate around 20 hours per person and everyone is busy, so is hard to get organized. Is also not particular pleasant to get lessons from me, patience is not exactly my best quality. That s when I’ve decided to do [jsquest](https://jsquest.io), taking inspiration from all the moments I told you.
 
 ### The how of jsquest
 
