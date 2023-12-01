@@ -12,7 +12,6 @@ module.exports = {
     },
   },
   plugins: [
-    `gatsby-plugin-feed`,
     `gatsby-plugin-mdx`,
     `gatsby-plugin-image`,
     `gatsby-plugin-draft`,
@@ -109,6 +108,7 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
+            title: "Casual Programming RSS Feed"
           },
         ],
       },
