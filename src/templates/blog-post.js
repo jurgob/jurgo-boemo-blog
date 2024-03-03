@@ -25,7 +25,7 @@ const BlogPostTemplate = ({ data, location }) => {
   const { previous, next } = data
   console.log(`data`, data)
   console.log(`data`, location.pathname)
-  const discussUrl = `https://mobile.twitter.com/search?q=${encodeURIComponent(`https://casual-programming.com${location.pathname}`)}`;
+  const discussUrl = `https://x.com/search?q=${encodeURIComponent(`casual-programming.com ${location.pathname}`)}`;
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -49,7 +49,7 @@ const BlogPostTemplate = ({ data, location }) => {
         <hr />
         <footer>
               <p style={{margin: "0px -20px 50px -20px"}} >
-                <BottomLink href={discussUrl} text="Discuss on Twitter" />
+                <BottomLink href={discussUrl} text="Discuss on  𝕏" />
                 <Sep />
                 <BottomLink href="/rss.xml" text="Subscribe to RSS Feed" />
               </p>
