@@ -36,7 +36,13 @@ fn value_in_cents(coin: Coin) -> u32 {
 }
 ```
 
+
+
 In this Rust code, the `match` expression guarantees exhaustive pattern matching for the `Coin` enum. Each variant is handled explicitly, leaving no possibility of unhandled cases.
+
+Try to remove some of the match in the value_in_cents function in [the rust playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=66af4923be7b7c1bb165f0d12399ab26), you will get an error at compile time.
+
+
 
 ## Exhaustive Pattern Matching in TypeScript
 
@@ -69,59 +75,66 @@ In TypeScript, achieving exhaustive pattern matching involves leveraging the `ne
 
 ### Using `never` in Functions
 
-Consider a function that operates on different types of shapes:
+This is the same example we did in rust:
 
 ```typescript
-type Shape = "circle" | "square" | "triangle";
+type Coin = "Penny" | "Nickel" | "Dime" | "Quarter";
 
-function describeShape(shape: Shape): void {
+function valueInCents(shape: Coin): number {
     switch (shape) {
-        case "circle":
-            console.log("This is a circle.");
-            break;
-        case "square":
-            console.log("This is a square.");
-            break;
-        case "triangle":
-            console.log("This is a triangle.");
-            break;
+        case "Penny":
+            return 1;
+        case "Nickel":
+            return 5;
+        case "Dime":
+            return 10;
+        case "Quarter":
+            return 25;
         default:
             const exhaustiveCheck: never = shape;
+            return exhaustiveCheck
     }
 }
 ```
 
-In this function, if a new shape type is introduced in the future, TypeScript ensures that we handle it explicitly by assigning it to a variable of type `never`. This guarantees exhaustive pattern matching.
+In this function, if a new Coin type is introduced in the future, TypeScript ensures that we handle it explicitly by assigning it to a variable of type `never` (which will give a compile erro). This guarantees exhaustive pattern matching.
+
+Try to add a value to the Coin union or to remove a case in the switch [on the typescript background](https://www.typescriptlang.org/play?ssl=17&ssc=2&pln=1&pc=1#code/C4TwDgpgBAwg9gSwHZQLxQEQAUJKSDKAH0wDkEBjAawgBtCSMARBAWwgcwEUBXAQwBOwCAIwBuAFASAZjyQVgCOCgBufWjwgBJJDFzAAzgAoDACz6QAXLERIAlNaQ9WAIxFQA3hKg+oBgO4IwBSmUCbmkHae3r6xFHwG0Ni4+BiWMbGZUAIQwDwCKACMklk+8YlklDT06aWZOXkFUACsJaXlSSzsaRl12bn5RQAMbVkd3PxCIj19vg2DUABMrb2xACYQ0nw8tMC1s1AUygbAUBAAHuY8JwgqEDCmENSOEHcCaH4REKN9800XVxudweTyovQAvhJIRIgA), you will see the compiler complaining.
+
 
 ### Using `never` in Switch Statements
 
 Similarly, we can achieve exhaustive pattern matching using `never` in switch statements:
 
 ```typescript
-function myFunction(coin:Coin): void {
-    let value: number = 0
-    switch (coin) {
+type Coin = "Penny" | "Nickel" | "Dime" | "Quarter";
+
+function myFunction(shape: Coin): number {
+    
+    let value = 0;
+    switch (shape) {
         case "Penny":
-            value=1;
+            value= 1;
             break;
         case "Nickel":
-            value=5;
+            value= 5;
             break;
         case "Dime":
-            value=10;
+            value= 10;
             break;
         case "Quarter":
-            value=25;
+            value= 25;
             break;
         default:
-            const exhaustiveCheck: never = coin;
-
+            const exhaustiveCheck: never = shape;
+            value = exhaustiveCheck
     }
-    console.log(`we do stuff here`)
 }
 ```
 
-This will also return an error in case you forget a `break`. 
+This will also return an error in case you forget a `break`.
+
+Try to remove a break in the [typescript backtround](https://www.typescriptlang.org/play?ssl=23&ssc=2&pln=1&pc=1#code/C4TwDgpgBAwg9gSwHZQLxQEQAUJKSDKAH0wDkEBjAawgBtCSMARBAWwgcwEUBXAQwBOwCAIwBuAFASAZjyQVgCOClYgAYnIVKkACgDOACz6QAXLERIAlGaQ9WAIxFQA3hKjuobj7QjAoANz5aHmh0AAZJDyg9AHcEYAoDKH0jSEsXLyj3Cj49aGxcfAwTTKyowOCIdABGSLKs+wEIPio6spy8skoaehL6rIqQ9ABWNv6oRubW0qiO-JZ2Ypn6waqoaojlssmWsdnc-N5BYVE+8fdV9AAmUa2Gpt27gBMIaT4eWmAz84plPT8IAAPIw8f4IfwQGAGCDUGwQCECNDRVIQPYrIIhJFAkFgiFQmFUUoAXwkJIkQA).
 
 ## Alternatives
 
