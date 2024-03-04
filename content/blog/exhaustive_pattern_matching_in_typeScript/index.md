@@ -8,8 +8,6 @@
   keywords: ["Typescript", "Exhaustive Pattern MAtching", "rust"]
 ---
 
-# Exhaustive Pattern Matching in TypeScript
-
 Pattern matching is a powerful programming construct that allows developers to match values against a series of patterns and execute code based on the matched pattern. Exhaustive pattern matching ensures that all possible cases are handled, leaving no room for unintended behavior. In this article, we'll explore exhaustive pattern matching in TypeScript, its importance, and various techniques to achieve it.
 
 ## Why Exhaustive Pattern Matching?
