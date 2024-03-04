@@ -162,5 +162,5 @@ The [ECMAScript Pattern Matching proposal](https://github.com/tc39/proposal-patt
 ## Conclusion
 
 Exhaustive pattern matching is a valuable technique for writing reliable and maintainable code. By leveraging TypeScript's type system and features like `never`, developers can ensure that all possible cases are handled, leading to more robust software. Additionally, with libraries like `ts-pattern` and upcoming language features, pattern matching in TypeScript is becoming even more expressive and convenient.
-Anyway, My personal opinion is that the pattern matching in typescript  right now, in terms of ergonomics, is  very far from the one you got in languages like Rus.  Such a foundamental things should be part of the language, so I'm really looking forward for the pattern matching proposal.
+Anyway, My personal opinion is that the pattern matching in typescript  right now, in terms of ergonomics, is  very far from the one you got in languages like Rust.  Such a foundamental things should be part of the language, so I'm really looking forward for the pattern matching proposal.
 But don't wait for it, us it now! with ts-pattern or with never.
