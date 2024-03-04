@@ -27,8 +27,15 @@ const Seo = ({ description, lang, meta, title }) => {
     `
   )
 
+  
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
+  
+  console.log(`prop title: `, title)
+  console.log(`prop defaultTitle: `, defaultTitle)
+  console.log(`prop metaDescription: `, metaDescription)
+ 
+  
 
   return (
     <Helmet
