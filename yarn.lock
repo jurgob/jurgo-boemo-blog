@@ -6211,6 +6211,13 @@ gatsby-parcel-config@1.12.1:
     "@parcel/transformer-js" "2.8.3"
     "@parcel/transformer-json" "2.8.3"
 
+gatsby-plugin-canonical-urls@^5.13.1:
+  version "5.13.1"
+  resolved "https://registry.npmjs.org/gatsby-plugin-canonical-urls/-/gatsby-plugin-canonical-urls-5.13.1.tgz"
+  integrity sha512-rnVEfz7gIPgYk/go/fk5tM5Iv/7Qe6GonquhWMkDNPvRJPJ0qkv37Hv1l/BrC/2AHz9RNQsSZJRonVPPSHlhgA==
+  dependencies:
+    "@babel/runtime" "^7.20.13"
+
 gatsby-plugin-draft@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/gatsby-plugin-draft/-/gatsby-plugin-draft-0.2.0.tgz"

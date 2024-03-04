@@ -12,6 +12,12 @@ module.exports = {
     },
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: `https://casual-programming.com`,
+      },
+    },
     `gatsby-plugin-mdx`,
     `gatsby-plugin-image`,
     `gatsby-plugin-draft`,
