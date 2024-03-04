@@ -233,15 +233,28 @@ While using `never` for exhaustive pattern matching is effective, there are alte
 The `ts-pattern` library provides a powerful pattern matching syntax for TypeScript:
 
 ```typescript
-import { match, _ } from 'ts-pattern';
+import { match, isMatching } from "ts-pattern";
 
-type Result = "success" | "error";
+const Coin = ["Penny", "Nickel", "Dime", "Quarter"] as const;
+type Coin = (typeof Coin)[number];
 
-const message = match<Result>('error')
-    .with('success', () => 'Operation succeeded!')
-    .with('error', () => 'An error occurred!')
+function valueInCents(coin: Coin) {
+  if (!isMatching(Coin, coin)) return undefined;
+  return match<Coin>(coin)
+    .with("Penny", () => 1)
+    .with("Nickel", () => 5)
+    .with("Dime", () => 10)
+    .with("Quarter", () => 25)
     .exhaustive();
+}
+
+const res: number = valueInCents("CoinNotValid" as Coin) || 0;
+console.log(res);
 ```
+
+Check how the complier works on [TS Playground](https://www.typescriptlang.org/play?#code/JYWwDg9gTgLgBAbziAhjAxgCwDR2AZwFk0tgA7AczgF84AzKCEOAchnwFow0YBTKMiwDcAKBHoIZfPADCEcnAC8cANoAiAAq8yZAJ5q4uNQDlg6ANa8ANgaMARUL1tw1ARQCuKWPzUBdOCj4cBJSMKIwumC8cHIKyhFREHQx8mQqZO4gAEb8-mJ07mToMMCScABuKFbuvACSZDLa7AAUEuQAXCnkAJQIInADeHTNAIQExBiY5BTNsWS4bWTd3XBQvDDuAnCFACa8dOS8O-2DaxtbqJMAPHMAfK2p3SeDgwB0AO7AMJjNLFo6uhYuGaK0UtzgAEYni8Xh8vj8WKYLNYgXAQUpwQBWaEwgZw76-BwgXio9FgyEABhxuPxCI8Xj4UFJoPBACZsc8Ya9eAAPTAodzSYDlXgg0TUMQhaSrXj4doZbL8JQVKo1eqNMgtNRzYwQGAANSqwB2BkCXSWcAAPpa4BSREA), to make it run you will need to export it to CodeSandbox (check the export menu in the TS Playground).
+
+note: I'm not an expert of the ts-pattern library, it is possible there's a better way to write this.
 
 ### ECMAScript Pattern Matching Proposal
 
