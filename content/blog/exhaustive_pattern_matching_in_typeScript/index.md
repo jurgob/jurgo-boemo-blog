@@ -77,6 +77,12 @@ Do you see the problem? If you forget to manage a case, the compiler will not he
 
 In TypeScript, achieving exhaustive pattern matching involves leveraging the `never` type. By using `never`, TypeScript ensures that a function or switch statement covers all possible input types or values.
 
+### Enter the `never`
+
+What does the `never` keyword do?. In TypeScript, the never keyword represents the type of values that never occur. When a function has a return type of never, it means that the function never returns normally and either throws an error or enters an infinite loop. never is a useful tool for making TypeScript code more robust and ensuring that all possible cases are handled. Read more about it in the [official TS docs](https://www.typescriptlang.org/docs/handbook/basic-types.html#never) or go even more deep [here](https://www.zhenghao.io/posts/ts-never).
+
+
+
 ### Using `never` in Functions
 
 Here is how we can implement the example we did in Rust using never:
