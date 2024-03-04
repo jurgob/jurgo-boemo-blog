@@ -62,26 +62,30 @@ function valueInCents(coin: Coin): number {
             return 10;
         case "Quarter":
             return 25;
+        default:
+            return 0
     }
 }
 ```
+Check this on the [TS Playground](https://www.typescriptlang.org/play?ssl=16&ssc=2&pln=1&pc=2#code/C4TwDgpgBAwg9gSwHZQLxQEQAUJKSDKAH0wDkEBjAawgBtCSMARBAWwgcwEUBXAQwBOwCAIwBuAFASAZjyQVgCOCgBufWjwgBJJDFzAAzgAoKiJAC5YZgJSWkPVgCMRUAN4SonqAYDuCYBQAFlAmNm4eXpEUfAbQ2Lj4GOYRkalQAhDAPAIoAIySaZ7RsWSUNPTJhakZWTlQAKwFhcVxLOxJKVXpmdl5AAxNaS3c-EIiHV1eNb1QAEyNnZEAJhDSfDy0wJWT3bUofZ0AvhLHUhJAA)
 
-Do you see the problem? If you forget to manage a case, the compliler will not help you. If tomorrow, there's a new type of Coin, the compiler will not tell you that you have to update the `valueInCents` function. 
 
-(p.s. if you are asking yourself why I didn't use an enum , it's because in Typescript [enum are not typesafe](https://dev.to/ivanzm123/dont-use-enums-in-typescript-they-are-very-dangerous-57bh).
+Do you see the problem? If you forget to manage a case, the compiler will not help you. If tomorrow, there's a new type of Coin, the compiler will not tell you that you have to update the `valueInCents` function. 
+
+(p.s. if you are asking yourself why I didn't use an enum , it's because in Typescript [enum are not type-safe](https://dev.to/ivanzm123/dont-use-enums-in-typescript-they-are-very-dangerous-57bh).
 
 
 In TypeScript, achieving exhaustive pattern matching involves leveraging the `never` type. By using `never`, TypeScript ensures that a function or switch statement covers all possible input types or values.
 
 ### Using `never` in Functions
 
-This is the same example we did in rust:
+Here is how we can implement the example we did in Rust using never:
 
 ```typescript
 type Coin = "Penny" | "Nickel" | "Dime" | "Quarter";
 
-function valueInCents(shape: Coin): number {
-    switch (shape) {
+function valueInCents(coin: Coin): number {
+    switch (coin) {
         case "Penny":
             return 1;
         case "Nickel":
@@ -91,15 +95,14 @@ function valueInCents(shape: Coin): number {
         case "Quarter":
             return 25;
         default:
-            const exhaustiveCheck: never = shape;
-            return exhaustiveCheck
+            return 0 as never
     }
 }
 ```
 
-In this function, if a new Coin type is introduced in the future, TypeScript ensures that we handle it explicitly by assigning it to a variable of type `never` (which will give a compile erro). This guarantees exhaustive pattern matching.
+In this function, if a new Coin type is introduced in the future, TypeScript ensures that we handle it explicitly by assigning it to a variable of type `never` (which will give a compile error). This guarantees exhaustive pattern matching.
 
-Try to add a value to the Coin union or to remove a case in the switch [on the typescript background](https://www.typescriptlang.org/play?ssl=17&ssc=2&pln=1&pc=1#code/C4TwDgpgBAwg9gSwHZQLxQEQAUJKSDKAH0wDkEBjAawgBtCSMARBAWwgcwEUBXAQwBOwCAIwBuAFASAZjyQVgCOCgBufWjwgBJJDFzAAzgAoDACz6QAXLERIAlNaQ9WAIxFQA3hKg+oBgO4IwBSmUCbmkHae3r6xFHwG0Ni4+BiWMbGZUAIQwDwCKACMklk+8YlklDT06aWZOXkFUACsJaXlSSzsaRl12bn5RQAMbVkd3PxCIj19vg2DUABMrb2xACYQ0nw8tMC1s1AUygbAUBAAHuY8JwgqEDCmENSOEHcCaH4REKN9800XVxudweTyovQAvhJIRIgA), you will see the compiler complaining.
+Try to add a value to the Coin union or to remove a case in the switch [on the typescript background](https://www.typescriptlang.org/play?ssl=16&ssc=2&pln=1&pc=1#code/C4TwDgpgBAwg9gSwHZQLxQEQAUJKSDKAH0wDkEBjAawgBtCSMARBAWwgcwEUBXAQwBOwCAIwBuAFASAZjyQVgCOCgBufWjwgBJJDFzAAzgAoKiJAC5YZgJSWkPVgCMRUAN4SonqAYDuCYBQAFlAmNm4eXpEUfAbQ2Lj4GOYRkalQAhDAPAIoAIySaZ7RsWSUNPTJhakZWTlQAKwFhcVxLOxJKVXpmdl5AAxNaS3c-EIiHV1eNb1QAEyNnZEAJhDSfDy0wJWT3bUofVAxUEgQKiKdAL4SV1ISQA), you will see the compiler complaining.
 
 
 ### Using `never` in Switch Statements
@@ -109,10 +112,10 @@ Similarly, we can achieve exhaustive pattern matching using `never` in switch st
 ```typescript
 type Coin = "Penny" | "Nickel" | "Dime" | "Quarter";
 
-function myFunction(shape: Coin): number {
+function myFunction(coin: Coin): void {
     
     let value = 0;
-    switch (shape) {
+    switch (coin) {
         case "Penny":
             value= 1;
             break;
@@ -126,15 +129,94 @@ function myFunction(shape: Coin): number {
             value= 25;
             break;
         default:
-            const exhaustiveCheck: never = shape;
-            value = exhaustiveCheck
+            value = 0 as never
     }
 }
 ```
 
 This will also return an error in case you forget a `break`.
 
-Try to remove a break in the [typescript backtround](https://www.typescriptlang.org/play?ssl=23&ssc=2&pln=1&pc=1#code/C4TwDgpgBAwg9gSwHZQLxQEQAUJKSDKAH0wDkEBjAawgBtCSMARBAWwgcwEUBXAQwBOwCAIwBuAFASAZjyQVgCOClYgAYnIVKkACgDOACz6QAXLERIAlGaQ9WAIxFQA3hKjuobj7QjAoANz5aHmh0AAZJDyg9AHcEYAoDKH0jSEsXLyj3Cj49aGxcfAwTTKyowOCIdABGSLKs+wEIPio6spy8skoaehL6rIqQ9ABWNv6oRubW0qiO-JZ2Ypn6waqoaojlssmWsdnc-N5BYVE+8fdV9AAmUa2Gpt27gBMIaT4eWmAz84plPT8IAAPIw8f4IfwQGAGCDUGwQCECNDRVIQPYrIIhJFAkFgiFQmFUUoAXwkJIkQA).
+Try to remove a break in the [typescript playground](https://www.typescriptlang.org/play?ssl=22&ssc=2&pln=1&pc=1#code/C4TwDgpgBAwg9gSwHZQLxQEQAUJKSDKAH0wDkEBjAawgBtCSMARBAWwgcwEUBXAQwBOwCAIwBuAFASAZjyQVgCOClYgAYnIVKkACgqIkALlgGAlMYBuiACZQA3hKhOoj57QjAoFvrR7R0AAySzlAAzgDuCMAUABZQemb2riFOFHyh0Ni4+BiGySkh3r4Q6ACMwQUpAEYCEHxUFQVpGWSUNPR5lSlFfugArI1dUDV1DfkhzZks7LnjlT0lUKVBcwUj9YMT6Zm8gsKinUNOC+gATAOr1bUbl9YQ0nw8tMCHRwtoUAFQ6VBIEBYifIAXwkIKkQA).
+
+
+## Error handling. 
+
+You may have noticed that in the default branch, which in theory is never reached, I'm returning a 0. The reason is that Typescript is not a very safe/strict type system (and this is by design), so you can always end up having unexpected value. It can be because you are parsing the information from a network request, cli input, file, etc... and your parser is not very strict. Or it can be just because you have just used `as Coin` like this: 
+
+```typescript
+type Coin = "Penny" | "Nickel" | "Dime" | "Quarter";
+
+function valueInCents(coin: Coin): number {
+    switch (coin) {
+        case "Penny":
+            return 1;
+        case "Nickel":
+            return 5;
+        case "Dime":
+            return 10;
+        case "Quarter":
+            return 25;
+        default:
+            return 0 as never
+    }
+}
+
+const value = valueInCents("CoinNotValid" as Coin) // thh compiler will be happy. value is gonna be 0
+
+```
+aka: if I have passed an invalid coin, the value in cent is 0. 
+you may instead want to be more explicit in the error handling and delegate it to the caller of the `valueInCent` function. 
+you could throw an Error like this: 
+
+```typescript
+type Coin = "Penny" | "Nickel" | "Dime" | "Quarter";
+
+function valueInCents(coin: Coin): number {
+    switch (coin) {
+        case "Penny":
+            return 1;
+        case "Nickel":
+            return 5;
+        case "Dime":
+            return 10;
+        case "Quarter":
+            return 25;
+        default:
+            throw Error("hello") as never;
+    }
+}
+
+valueInCents("CoinNotValid" as Coin)
+```
+
+Or you could return `undefined`. If you go this way, you should change the signature of the function to return `number | undefined`  The Compiler does not force you, but in this way you will force whoever is using the function to manage `undefined`. Obviously I'm assuming you are working with `"strict": true` in your complier option
+
+the could would look like this: 
+
+```typescript
+type Coin = "Penny" | "Nickel" | "Dime" | "Quarter";
+
+function valueInCents(coin: Coin): number|undefined {
+    switch (coin) {
+        case "Penny":
+            return 1;
+        case "Nickel":
+            return 5;
+        case "Dime":
+            return 10;
+        case "Quarter":
+            return 25;
+        default:
+            return undefined as never;
+    }
+}
+
+const res:number = valueInCents("CoinNotValid" as Coin)  || 0 //the complier force you to manage the case is undefined
+```
+
+Go to the [typescript playground](https://www.typescriptlang.org/play?ssl=18&ssc=119&pln=1&pc=1#code/C4TwDgpgBAwg9gSwHZQLxQEQAUJKSDKAH0wDkEBjAawgBtCSMARBAWwgcwEUBXAQwBOwCAIwBuAFASAZjyQVgCOCgBufWjwgBJJDFzAAzgAoKiJAC5YZgJSWkPVgCMRROQBMI05BDdQA3hJQQVAGAO4IwBQAFlAmNv6BwUkUfAbQ2Lj4GOaJSXlQAhDAPAIoAIyS+UEpaWSUNPQ5VXmFxaVQAKyVVTXpLOzZuc0FRSXlAAzd+b3c-EIig8PBrWNQAExdQ0ke0nw8tMBNSyNtKO6e3r6pUEgQKiJTUAC+Ei8SpkgGwCMG5vZOIjQUDUGm0un0xgw8GQpDgwAAauoEG5CNdoUhrEEiCRxlAAPR44BRaCmVhgWgIQHSOACCjQEBwHhQYBwKCsPhIPgAc2gRJJqWgCAMUHOXlubikQA) and try to remove the `|| 0`. the compiler will complain. Try to remove also the `|undefined` from the signature, now the compiler will be happy. Unluckily it is gonna be up to you to be disciplined.
+  
+
 
 ## Alternatives
 
@@ -162,5 +244,5 @@ The [ECMAScript Pattern Matching proposal](https://github.com/tc39/proposal-patt
 ## Conclusion
 
 Exhaustive pattern matching is a valuable technique for writing reliable and maintainable code. By leveraging TypeScript's type system and features like `never`, developers can ensure that all possible cases are handled, leading to more robust software. Additionally, with libraries like `ts-pattern` and upcoming language features, pattern matching in TypeScript is becoming even more expressive and convenient.
-Anyway, My personal opinion is that the pattern matching in typescript  right now, in terms of ergonomics, is  very far from the one you got in languages like Rust.  Such a foundamental things should be part of the language, so I'm really looking forward for the pattern matching proposal.
+Anyway, My personal opinion is that the pattern matching in typescript  right now, in terms of ergonomics, is  very far from the one you got in languages like Rust.  Such a fundamental things should be part of the language, so I'm really looking forward for the pattern matching proposal.
 But don't wait for it, us it now! with ts-pattern or with never.
