@@ -17,7 +17,7 @@ const Layout = ({ location, title, children }) => {
           width={34}
           height={32}
           quality={95}
-          alt=" " 
+          alt="" 
         />  
       </h1>
       
