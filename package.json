@@ -41,6 +41,7 @@
     "typeface-montserrat": "1.1.13"
   },
   "devDependencies": {
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.32",
     "prettier": "3.1.0",
     "vercel": "^32.6.0"
   },
