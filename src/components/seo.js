@@ -30,12 +30,6 @@ const Seo = ({ description, lang, meta, title }) => {
   
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
-  
-  console.log(`prop title: `, title)
-  console.log(`prop defaultTitle: `, defaultTitle)
-  console.log(`prop metaDescription: `, metaDescription)
- 
-  
 
   return (
     <Helmet
@@ -54,12 +48,24 @@ const Seo = ({ description, lang, meta, title }) => {
           content: title,
         },
         {
+          property: `og:image`,
+          content: "https://casual-programming.com/static/4343d5276e46f88e0a294256477698da/79c74/casual-programming-logo-inverted2.png",
+        },
+        {
+          property: `og:url`,
+          content: "https://casual-programming.com",
+        },
+        {
           property: `og:description`,
           content: metaDescription,
         },
         {
           property: `og:type`,
           content: `website`,
+        },
+        {
+          property: `og:site_name`,
+          content: `Casual Programming`,
         },
         {
           name: `twitter:card`,
