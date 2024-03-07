@@ -9,6 +9,8 @@ import * as React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
+import { useLocation } from '@reach/router';
+
 
 const Seo = ({ description, lang, meta, title }) => {
   const { site } = useStaticQuery(
@@ -30,7 +32,8 @@ const Seo = ({ description, lang, meta, title }) => {
   
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
-
+  const location = useLocation();
+  const canonical = location.pathname ? `${location.pathname}` : null;
   return (
     <Helmet
       htmlAttributes={{
@@ -47,13 +50,13 @@ const Seo = ({ description, lang, meta, title }) => {
           property: `og:title`,
           content: title,
         },
-        {
-          property: `og:image`,
-          content: "https://casual-programming.com/static/4343d5276e46f88e0a294256477698da/79c74/casual-programming-logo-inverted2.png",
-        },
+        // {
+        //   property: `og:image`,
+        //   content: "https://casual-programming.com/static/4343d5276e46f88e0a294256477698da/79c74/casual-programming-logo-inverted2.png",
+        // },
         {
           property: `og:url`,
-          content: "https://casual-programming.com",
+          content: `https://casual-programming.com${canonical}`,
         },
         {
           property: `og:description`,
