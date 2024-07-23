@@ -25,7 +25,7 @@ const BlogPostTemplate = ({ data, location }) => {
   const { previous, next } = data
   console.log(`data`, data)
   console.log(`data`, location.pathname)
-  const discussUrl = `https://x.com/search?q=${encodeURIComponent(`casual-programming.com ${location.pathname}`)}`;
+  const discussUrl = `https://x.com/search?q=${encodeURIComponent(`https://casual-programming.com${location.pathname}`)}`;
 
   return (
     <Layout location={location} title={siteTitle}>
