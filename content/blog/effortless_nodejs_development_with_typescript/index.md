@@ -8,7 +8,7 @@
   keywords: []
 ---
 
-This guide provides a straightforward approach to setting up a Node.js project with TypeScript, without the need for complex configurations. By taking advantage of the latest Node.js features like watch mode, the built-in test runner, and the assert library, this setup minimizes dependencies while ensuring a smooth and efficient development experience. Follow step-by-step instructions to initialize your project, integrate TypeScript, set up Git, and add testing capabilities.
+This guide provides a straightforward approach to setting up a Node.js project with TypeScript, without the need for complex configurations. By taking advantage of the latest Node.js features like watch mode, the built-in test runner, and the assert library, this setup minimizes dependencies while ensuring a smooth and efficient development experience. Follow step-by-step instructions to initialize your project, integrate TypeScript, set up Git, and add testing capabilities. In this guide I wanted to minimize to depencencies you install and the configuration files you have to add in your project. If you are not doing Frontend you can go very far with a very simple scaffolding.
 
 
 # TLDR
