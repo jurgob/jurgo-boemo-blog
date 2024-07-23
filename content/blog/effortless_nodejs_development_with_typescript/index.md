@@ -226,3 +226,71 @@ For an efficient development workflow, open three terminals and run:
     ```
 
 You are done! This setup provides a simple and effective way to scaffold a Node.js project with TypeScript without any complex configuration. Enjoy coding!
+
+
+## Bonus: adding test coverage.
+
+We can use tools like `nyc` to make our life much easier. 
+
+install nyc: 
+
+```bash
+npm i -D nyc
+```
+
+
+then modify the package.json like this: 
+
+package.json
+```
+scripts: {
+    ...
+    "test": "nyc --reporter=html --reporter=text node  --import=tsx --test src/**/*.test.ts",
+    ...,
+    "coverage": "nyc report --reporter=text --reporter=text-summary",
+    "coverage:html": "npx http-server coverage"
+}
+
+```
+
+add to your .gitignore the following: 
+
+```
+...
+.nyc_output/*
+coverage/*
+```
+
+now, if you run `npm test`, you will see some new information after the test run: 
+
+![](/images/01_run_npm_test.png)
+
+
+*After* you have runned the test, you will be able to print any time you want several report. 
+
+to run a text based report just run: 
+
+```bash
+npm run coverage
+```
+
+you will see: 
+
+![](/images/02_npm_run_coverage.png)
+
+or you can run the html report with: 
+
+```bash
+npm run coverage:html
+```
+
+now if you go at `http://localhost:8000/` from your browser you will see in details the coverage file by file: 
+
+
+![](/images/03_html_coverage_report.png)
+
+
+you can even click on a sigle file to check which part of your source code is not covered by your tests:
+
+![](/images/04_html_coverage_report_2.png)
+
