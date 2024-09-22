@@ -23,12 +23,7 @@ In this article, we'll set up a **Node.js server** using **Express** and **MinIO
    - **Endpoint**: `/api/uploads/url?url=imageUrl&key=keyName`
    - This will download an image from a given URL, upload it to MinIO with a specified `key`, and return a public URL to access the image.
 
-We’ll deploy **MinIO** locally using **Docker Compose** and implement the server using **Axios** and the **Minio** SDK.
-
-
-
-
-
+We’ll deploy **MinIO** locally using **Docker Compose** and implement the server using **Axios** and the **[AWS Typescript SDK](https://github.com/aws/aws-sdk-js-v3)** (this last one will be configured to use minio instead of s3 in the backend).
 
 
 ## For the Impatient
@@ -46,7 +41,7 @@ If you want to dive right in, you can find the complete working code in the repo
 
 ### Important npm scripts
 
-- **npm run dev:** this will spin up both the nodejs server and the docker compose. Is gonna be the only think you need to run to make the server work.
+- **npm run dev:** this will spin up both the nodejs server and the docker compose. Is gonna be the only thing you need to run to make the server work.
 
 
 ## Setting up the server dependencies with docker compose
