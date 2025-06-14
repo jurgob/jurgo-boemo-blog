@@ -637,7 +637,7 @@ is worth to mention how the npm scripts are working in this project.
 
 
 
-## Conclusion
+## Conclusion   
 You've now successfully set up a Node.js server with MinIO for handling image uploads using pre-signed URLs. MinIO offers a cost-effective, self-hosted alternative to AWS S3 for object storage, and the use of pre-signed URLs allows clients to securely upload and retrieve files without exposing sensitive credentials.
 
 For the complete code, visit the repository [here](https://github.com/jurgob/s3-test-minio) and start building your own object storage solution locally with Node.js and MinIO.

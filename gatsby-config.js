@@ -83,7 +83,7 @@ module.exports = {
             }
           }
         `,
-        feeds: [
+      feeds: [
           {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
               return allMarkdownRemark.nodes.map(node => {
