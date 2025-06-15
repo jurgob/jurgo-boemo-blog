@@ -15,11 +15,23 @@ TypeScript’s type system isn’t strictly safe by default — and that was lik
 
 ---
 
+## TLDR Version
+
+if you don't have time, here is what you are gonna learn: 
+when you are defining your types, follow those rules:
+- avoid `any` at any cost, eventyally use `unknown`
+- if you know you need an object, avoid the type `object`. use the type `Record<string, MyUnion>`, make the uninon as strict as you can.
+- strict union still allows you to have nested data.
+- if you type your data right, your code will became very concise,  the optional chaining is gonna be all what you need in most cases.
+
+If this is not clear enough or you can't wait to read my amazing article, keep reading, if you understand anything then feel free to skip the rest.
+
 ## The `User` Object: Starting Simple
 
 Here’s a pattern I’ve seen many times in real-world code.
 Imagine we have a basic `User` object that allows arbitrary data.
 let's say you want to get the `user.data.role` property from your user. 
+Ideally, if you know what is the [optional chaining](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html) (the `?.` operator) you would expect that you could do something like `const role = user?.data?.role` and eventually assign `underfined` if something in this chain does not exist.
 
 
 “Arbitrary” sounds like you can put `any` kind of value there, right? 
@@ -50,17 +62,9 @@ The complier is happy because typing properties with  any does not mean only acc
 
 Now if you are an old-school js developer, you know that the js, has many dynamic languages, is based on [Duck Typing](https://en.wikipedia.org/wiki/Duck_typing). 
 In a nutshell, if you are too lazy to read wikipedia, duck typing means you got to write a bunch of checks at runtime if object properties exists.
-This forse you to write repetitive, defensive checks:
+This force you to write repetitive, defensive checks, and if you are not an experienced javascript developer, probably you don't even know what to check exactly.
 
-```ts
-console.log(user?.data?.role)
-```
-
-but what if you want to be sure this is `really` and object?
-
-And even that won’t prevent all issues — it's fragile and untyped. Immagine if data allow nested object!
-
-Is my belive that `any` was one of the major weapon to convince js developers to move to typescript. But in 2025 any  still exist in typescript mainlty for retrocompatibility reasons (and any linter discourage you to use it)
+Is my believe that `any` was one of the major weapon to convince js developers to move to typescript. But in 2025 any  still exist in typescript mainly for retrocompatibility reasons (and any linter discourage you to use it)
 
 
 ---
@@ -100,51 +104,52 @@ Now, TypeScript *forces* you to check before use, that's why the check is change
 
 ## What About `object`?
 
-Using `object` feels more descriptive, I mean, in js an object is that thing you define with `{}`, right? it is basically an hashmap, correct? seems exactly what I need!
+Using `object` feels more descriptive, I mean, in js an object is that thing you define with `{}`, right? it is basically an [hashmap](https://youtu.be/pKO9UjSeLew?si=zavllTNv_Gmtqppf&t=58), correct? It seems exactly what I need!
 Here is how your type would be:
 
 ```ts
 type User = {
   id: string;
   name: string;
-  data: object;
+  data?: object;
 };
 
 if(user?.data  &&  "role" in user.data ) 
     console.log(user?.data.role)
 ```
 
-But it still hides sharp edges.
-This allows **any value where `typeof value === "object"`**, which includes:
+A little better, but still too verbose. Also this is not particularry safe. 
+In fact, this allows **any value where `typeof value === "object"`**, which includes:
 
 - Arrays (`[]`)
 - `null`
 - `{}`
 
-So basically, wtll the same typecheck. Not ideal for safe usage or good DX.
+That's because typescript need to reflect what javascript do. 
+In general, Not ideal for safe usage or good DX.
 
 ---
 
 ## ✅ Use `Record<string, unknown>`
 
-The reality is that whay you need is a record. Your key values are probably strings, and if you don't know your values type, you can use `unknown`. Something like:
+The reality is that what you need is a record. Your key values are probably strings, and if you don't know your values type, you can use `unknown`. Something like:
 
 ```ts
 type User = {
   id: string;
   name: string;
-  data: Record<string, unknown>;
+  data?: Record<string, unknown>;
 };
 
-const user = {
+const user:User = {
     id:"1",
     name:"user1",
-    data:{}
+    data:{
+      "role": "user"
+    }
 }
 
-if("role" in user.data && user.data?.role === "agent"){
-    console.log(user.data.role)
-}
+console.log(user.data?.role)
 ```
 [Check this on the TS Playground](https://www.typescriptlang.org/play/?ssl=15&ssc=2&pln=7&pc=1#code/C4TwDgpgBAqgzhATlAvFA3gKClAlgEwC4o5hFcA7AcwG5soKBDAWwmNPOrp30eEeIAlCAGMA9onwAeDpSoAaKAFcKAawpiA7hQB8dAL51M4iqWUJkaLDhwFCAIgCM9+fRxNWDpReeubUXn5CdH1MUMxcADMACntEMQAbCHs8CnMkADpAxigAMlz0xCy+RgB+DPik1BQ0e0YqCApgewBKaxsTOESIDISxKmjvTOyK7pawoA)
 
@@ -152,21 +157,20 @@ if("role" in user.data && user.data?.role === "agent"){
 This enforces you to have data :
 - Must be a plain object
 - Keys must be strings
-- Values must be explicitly narrowed before use
 
 ### How you use it:
 
-If you try to access `someValue` without narrowing, the compiler will complain — which is **exactly** what you want.
+This is finally what we want!
 
 ### Bonus tip
 
-If you don’t use `symbol` or `number` keys in your objects (and you almost never do unless writing a compiler or framework), you don’t need `Record<symbol | string, ...>`. Stick with `Record<string, ...>`.
+String is not the only type you can use for object keys in javascript and typescript. But if you don't know what a symbole is, or why this is true in js:  `typeof [] ==='string'`,  Stick with `Record<string, ...>`.
 
 ---
 
 ## Narrowing with Union Types
 
-You can also limit the types of values allowed inside `data`:
+You can do better then this. You can also limit the types of values allowed inside `data`:
 
 ```ts
 type User = {
@@ -174,18 +178,19 @@ type User = {
   name: string;
   data: Record<string, string | number | boolean>;
 };
-```
 
-### Now usage becomes simpler:
-
-```ts
-function processUser(user: User) {
-  const theme = user.data["theme"];
-  if (typeof theme === "string") {
-    console.log(theme.toUpperCase());
-  }
+const user:User = {
+    id:"1",
+    name:"user1",
+    data:{
+      "role": "user"
+    }
 }
+
+console.log(user.data?.role)
 ```
+
+
 
 Because you’ve already told TypeScript what values are possible, narrowing is straightforward and less error-prone.
 
