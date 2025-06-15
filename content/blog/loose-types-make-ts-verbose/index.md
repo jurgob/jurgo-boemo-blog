@@ -15,14 +15,15 @@ TypeScript’s type system isn’t strictly safe by default — and that was lik
 
 ---
 
-## TLDR Version
+## TL;DR Version
 
-if you don't have time, here is what you are gonna learn: 
-when you are defining your types, follow those rules:
-- avoid `any` at any cost, eventyally use `unknown`
-- if you know you need an object, avoid the type `object`. use the type `Record<string, MyUnion>`, make the uninon as strict as you can.
+If you don't have time, here is what you are gonna learn: 
+
+When you are defining your types, follow these rules:
+- avoid `any` at any cost, eventually use `unknown`
+- if you know you need an object, avoid the type `object`. use the type `Record<string, MyUnion>`, make the union as strict as you can.
 - strict union still allows you to have nested data.
-- if you type your data right, your code will became very concise,  the optional chaining is gonna be all what you need in most cases.
+- if you type your data right, your code will become very concise, the optional chaining is gonna be all what you need in most cases.
 
 If this is not clear enough or you can't wait to read my amazing article, keep reading, if you understand anything then feel free to skip the rest.
 
@@ -64,14 +65,14 @@ Now if you are an old-school js developer, you know that the js, has many dynami
 In a nutshell, if you are too lazy to read wikipedia, duck typing means you got to write a bunch of checks at runtime if object properties exists.
 This force you to write repetitive, defensive checks, and if you are not an experienced javascript developer, probably you don't even know what to check exactly.
 
-Is my believe that `any` was one of the major weapon to convince js developers to move to typescript. But in 2025 any  still exist in typescript mainly for retrocompatibility reasons (and any linter discourage you to use it)
+It is my belief that `any` was one of the major weapons to convince js developers to move to typescript. But in 2025 any still exists in typescript mainly for retrocompatibility reasons (and any linter discourages you to use it)
 
 
 ---
 
 ## `unknown` to the Rescue
 
-If you think you should use `any`, it probaly means you want to use `unknown`:
+If you think you should use `any`, it probably means you want to use `unknown`:
 
 
 let's see how this changes:
@@ -95,10 +96,10 @@ if(user?.data && typeof user?.data ==="object" &&  "role" in user.data ) // you 
 ```
 [TS playground](https://www.typescriptlang.org/play/?#code/C4TwDgpgBAqgzhATlAvFA3gKClAlgEwC4o5hFcA7AcwG5soKBDAWwmNPOrp30eEYD8xAK4UA1hQD2Adwp0AvnUwBjSRVJRhCRIXhJUGejgKEARAEZTAGiMMWbU1qSWbOHn0aF0iSQBs2UI7apvKYoZi4AGYAFE6IAgB0vPxQAGSpUKCQkpGa2onJjKgoKKaSAEYAVhDKwKZpGYE+-vWUeUhJHlAAlFAA9H1QIJLCDBAQ+JmSUIz4k8AAFrhweLmSyIvQqsxgvrj60ri+vgySwFD+58Oj+NO4wAm2qup+EAm+klSx+Z38ic0QbpAA)
 
-Now, TypeScript *forces* you to check before use, that's why the check is changed. now it is safe, but it is super verbose. For this reason, I saw many develper prefering to use any and hoping to not be on call if this became an error in production.
+Now, TypeScript *forces* you to check before use, that's why the check is changed. Now it is safe, but it is super verbose. For this reason, I saw many developers preferring to use any and hoping to not be on call if this becomes an error in production.
 
 
-✅ The check is still at runbime, but **you can't forget it anymore**. The compiler has your back. Still very verbose indeed.
+✅ The check is still at runtime, but **you can't forget it anymore**. The compiler has your back. Still very verbose indeed.
 
 ---
 
@@ -118,7 +119,7 @@ if(user?.data  &&  "role" in user.data )
     console.log(user?.data.role)
 ```
 
-A little better, but still too verbose. Also this is not particularry safe. 
+A little better, but still too verbose. Also this is not particularly safe. 
 In fact, this allows **any value where `typeof value === "object"`**, which includes:
 
 - Arrays (`[]`)
@@ -164,13 +165,13 @@ This is finally what we want!
 
 ### Bonus tip
 
-String is not the only type you can use for object keys in javascript and typescript. But if you don't know what a symbole is, or why this is true in js:  `typeof [] ==='string'`,  Stick with `Record<string, ...>`.
+String is not the only type you can use for object keys in javascript and typescript. But if you don't know what a symbol is, or why this is true in js:  `typeof [] === 'object'`,  stick with `Record<string, ...>`.
 
 ---
 
 ## Narrowing with Union Types
 
-You can do better then this. You can also limit the types of values allowed inside `data`:
+You can do better than this. You can also limit the types of values allowed inside `data`:
 
 ```ts
 type User = {
@@ -216,32 +217,7 @@ type User = {
 };
 ```
 
-### Example usage:
-
-```ts
-function getTheme(user: User) {
-  if (
-    typeof user.data === "object" &&
-    user.data !== null &&
-    "settings" in user.data
-  ) {
-    const settings = user.data["settings"];
-    if (
-      typeof settings === "object" &&
-      settings !== null &&
-      "theme" in settings
-    ) {
-      const theme = (settings as any)["theme"];
-      if (typeof theme === "string") {
-        return theme;
-      }
-    }
-  }
-  return "default";
-}
-```
-
-This is especially useful when your data comes from user input or APIs.
+Now 
 
 ---
 
