@@ -191,57 +191,11 @@ const user:User = {
 console.log(user.data?.role)
 ```
 
-
-
 Because you’ve already told TypeScript what values are possible, narrowing is straightforward and less error-prone.
 
 ---
 
-## 🌲 Recursive Type for Nested Objects
-
-What if `data` can contain nested objects and arrays, like JSON? Use a recursive type:
-
-```ts
-type JSONValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JSONValue[]
-  | { [key: string]: JSONValue };
-
-type User = {
-  id: string;
-  name: string;
-  data: JSONValue;
-};
-```
-
-Now 
-
----
-
 ## Summary
-
-| Type                       | Compiler Safe? | Allows `null`? | Good Default? | Requires Manual Checks? |
-|---------------------------|----------------|----------------|----------------|--------------------------|
-| `null`                    | ❌              | ✅              | ❌              | ✅                        |
-| `unknown`                 | ✅              | ✅              | ✅              | ✅                        |
-| `object`                  | ✅              | ✅              | ❌              | ✅                        |
-| `Record<string, unknown>` | ✅              | ❌              | ✅✅✅           | ✅                        |
-| Recursive JSONValue       | ✅              | ✅              | ✅ (for deep data) | ✅                        |
-
----
-
-### ✅ Pro tip:
-
-Start with `unknown`, then **narrow** to a more precise shape using:
-
-- `Record<string, unknown>` for plain JS objects  
-- Union types (`string | number | boolean`) for value sets  
-- Recursive types for deeply nested structures  
-
----
 
 Narrow types are your best friend. They make your library safer, reduce bugs, and improve your developer experience.
 
