@@ -20,9 +20,10 @@ TypeScript’s type system isn’t strictly safe by default — and that was lik
 If you don't have time, here is what you are gonna learn: 
 
 When you are defining your types, follow these rules:
-- Avoid `any` at any cost; prefer `unknown`
-- If you need an object type, avoid  `object`. use `Record<string, MyUnion>`and make the union as strict as possible.
-- With properly typed data, optional chaining (`?.`) will usually be all you need.
+- ❌ Avoid `any` at any cost; prefer `unknown`
+- ❌ If you need an object type, avoid  `object`. 
+- ✅ Use Instead  `Record<string, MyUnion>`and make the union as strict as possible.
+- ✅ With properly typed data, [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) (`?.`) will usually be all you need.
 
 
 ## The `User` Object: Starting Simple
@@ -49,7 +50,6 @@ const user:User = {
     name:"user1",
 }
 
-
 console.log(user.data.role)
 ```
 [Try this example on TS Playground](https://www.typescriptlang.org/play/?#code/C4TwDgpgBAqgzhATlAvFA3gKClAlgEwC4o5hFcA7AcwG5soKBDAWwmNPOrp30eEYD8xRhRB0AvnUwBjAPYVSUAK4JEheElQZ6OAoQBEARn0AaHQxZt9KpMbPjMjuQtkAbCADpXsqgAobiB68-B6IbhAAlEA)
@@ -64,7 +64,6 @@ In a nutshell, if you are too lazy to read wikipedia, duck typing means you got 
 This force you to write repetitive, defensive checks, and if you are not an experienced javascript developer, probably you don't even know what to check exactly.
 
 It is my belief that `any` was one of the major weapons to convince js developers to move to typescript. But in 2025 any still exists in typescript mainly for retrocompatibility reasons (and any linter discourages you to use it)
-
 
 ---
 
