@@ -20,22 +20,20 @@ TypeScript’s type system isn’t strictly safe by default — and that was lik
 If you don't have time, here is what you are gonna learn: 
 
 When you are defining your types, follow these rules:
-- avoid `any` at any cost, eventually use `unknown`
-- if you know you need an object, avoid the type `object`. use the type `Record<string, MyUnion>`, make the union as strict as you can.
-- strict union still allows you to have nested data.
-- if you type your data right, your code will become very concise, the optional chaining is gonna be all what you need in most cases.
+- Avoid `any` at any cost; prefer `unknown`
+- If you need an object type, avoid  `object`. use `Record<string, MyUnion>`and make the union as strict as possible.
+- With properly typed data, optional chaining (`?.`) will usually be all you need.
 
-If this is not clear enough or you can't wait to read my amazing article, keep reading, if you understand anything then feel free to skip the rest.
 
 ## The `User` Object: Starting Simple
 
 Here’s a pattern I’ve seen many times in real-world code.
 Imagine we have a basic `User` object that allows arbitrary data.
 let's say you want to get the `user.data.role` property from your user. 
-Ideally, if you know what is the [optional chaining](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html) (the `?.` operator) you would expect that you could do something like `const role = user?.data?.role` and eventually assign `underfined` if something in this chain does not exist.
+Ideally, if you know what is the [optional chaining](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html) (the `?.` operator) you would expect that you could do something like `const role = user?.data?.role` and eventually assign `undefined` if something in this chain does not exist.
 
 
-“Arbitrary” sounds like you can put `any` kind of value there, right? 
+At first glance, `data?: any` feels like the simplest way to allow any shape of object… but it silently disables all checks
 
 so the type would be:
 
@@ -54,12 +52,12 @@ const user:User = {
 
 console.log(user.data.role)
 ```
-[TS Playground](https://www.typescriptlang.org/play/?#code/C4TwDgpgBAqgzhATlAvFA3gKClAlgEwC4o5hFcA7AcwG5soKBDAWwmNPOrp30eEYD8xRhRB0AvnUwBjAPYVSUAK4JEheElQZ6OAoQBEARn0AaHQxZt9KpMbPjMjuQtkAbCADpXsqgAobiB68-B6IbhAAlEA)
+[Try this example on TS Playground](https://www.typescriptlang.org/play/?#code/C4TwDgpgBAqgzhATlAvFA3gKClAlgEwC4o5hFcA7AcwG5soKBDAWwmNPOrp30eEYD8xRhRB0AvnUwBjAPYVSUAK4JEheElQZ6OAoQBEARn0AaHQxZt9KpMbPjMjuQtkAbCADpXsqgAobiB68-B6IbhAAlEA)
 
 
 your compiler will be happy, but you will get an error at runtime. 
 
-The complier is happy because typing properties with  any does not mean only accept "any value", in reality  `any mean: "accept any value" AND "disable the typecheck for this property".`
+The compiler is happy because typing properties with  any does not mean only accept "any value", in reality  `any` means  `"accept any value" AND "disable the typecheck for this property"`.
 
 Now if you are an old-school js developer, you know that the js, has many dynamic languages, is based on [Duck Typing](https://en.wikipedia.org/wiki/Duck_typing). 
 In a nutshell, if you are too lazy to read wikipedia, duck typing means you got to write a bunch of checks at runtime if object properties exists.
@@ -91,10 +89,11 @@ const user:User = {
     data:{role: "user"}
 }
 
-if(user?.data && typeof user?.data ==="object" &&  "role" in user.data ) // you need to add this if or the complier will not let you do it.
+if(user?.data && typeof user?.data ==="object" &&  "role" in user.data ) // you need to add this if or the compiler will not let you do it.
     console.log(user?.data?.role)
 ```
-[TS playground](https://www.typescriptlang.org/play/?#code/C4TwDgpgBAqgzhATlAvFA3gKClAlgEwC4o5hFcA7AcwG5soKBDAWwmNPOrp30eEYD8xAK4UA1hQD2Adwp0AvnUwBjSRVJRhCRIXhJUGejgKEARAEZTAGiMMWbU1qSWbOHn0aF0iSQBs2UI7apvKYoZi4AGYAFE6IAgB0vPxQAGSpUKCQkpGa2onJjKgoKKaSAEYAVhDKwKZpGYE+-vWUeUhJHlAAlFAA9H1QIJLCDBAQ+JmSUIz4k8AAFrhweLmSyIvQqsxgvrj60ri+vgySwFD+58Oj+NO4wAm2qup+EAm+klSx+Z38ic0QbpAA)
+
+[Try this example on TS Playground](https://www.typescriptlang.org/play/?#code/C4TwDgpgBAqgzhATlAvFA3gKClAlgEwC4o5hFcA7AcwG5soKBDAWwmNPOrp30eEYD8xAK4UA1hQD2Adwp0AvnUwBjSRVJRhCRIXhJUGejgKEARAEZTAGiMMWbU1qSWbOHn0aF0iSQBs2UI7apvKYoZi4AGYAFE6IAgB0vPxQAGSpUKCQkpGa2onJjKgoKKaSAEYAVhDKwKZpGYE+-vWUeUhJHlAAlFAA9H1QIJLCDBAQ+JmSUIz4k8AAFrhweLmSyIvQqsxgvrj60ri+vgySwFD+58Oj+NO4wAm2qup+EAm+klSx+Z38ic0QbpAA)
 
 Now, TypeScript *forces* you to check before use, that's why the check is changed. Now it is safe, but it is super verbose. For this reason, I saw many developers preferring to use any and hoping to not be on call if this becomes an error in production.
 
@@ -152,7 +151,7 @@ const user:User = {
 
 console.log(user.data?.role)
 ```
-[Check this on the TS Playground](https://www.typescriptlang.org/play/?ssl=15&ssc=2&pln=7&pc=1#code/C4TwDgpgBAqgzhATlAvFA3gKClAlgEwC4o5hFcA7AcwG5soKBDAWwmNPOrp30eEeIAlCAGMA9onwAeDpSoAaKAFcKAawpiA7hQB8dAL51M4iqWUJkaLDhwFCAIgCM9+fRxNWDpReeubUXn5CdH1MUMxcADMACntEMQAbCHs8CnMkADpAxigAMlz0xCy+RgB+DPik1BQ0e0YqCApgewBKaxsTOESIDISxKmjvTOyK7pawoA)
+[Check this on the Try this example on TS Playground](https://www.typescriptlang.org/play/?ssl=15&ssc=2&pln=7&pc=1#code/C4TwDgpgBAqgzhATlAvFA3gKClAlgEwC4o5hFcA7AcwG5soKBDAWwmNPOrp30eEeIAlCAGMA9onwAeDpSoAaKAFcKAawpiA7hQB8dAL51M4iqWUJkaLDhwFCAIgCM9+fRxNWDpReeubUXn5CdH1MUMxcADMACntEMQAbCHs8CnMkADpAxigAMlz0xCy+RgB+DPik1BQ0e0YqCApgewBKaxsTOESIDISxKmjvTOyK7pawoA)
 
 
 This enforces you to have data :
@@ -197,6 +196,6 @@ Because you’ve already told TypeScript what values are possible, narrowing is 
 
 ## Summary
 
-Narrow types are your best friend. They make your library safer, reduce bugs, and improve your developer experience.
+Using narrow, well-defined types makes your code safer, reduces bugs, and dramatically improves your developer experience.
 
 Want to dig deeper into advanced type guards or build custom ones for your library? Drop a comment — or better, share how *you* handle dynamic data with TypeScript!
