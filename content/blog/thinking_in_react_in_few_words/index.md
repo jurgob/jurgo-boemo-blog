@@ -3,7 +3,7 @@
   date: 2025-06-21 20:55
   title: "Thinking in React in few words"
   draft: false
-  description: "This is my version of 'thinking in React' and the 'Tic Tac Toe' tutorial, with Typescript and slot machines."
+  description: "In an era dominated by AI agents and vibecoding, mastering the fundamentals has never been more important. That's why I created my own version of 'Thinking in React' and the Tic Tac Toe tutorial, shorter, easier, with Typescript and slot machines."
   categories: []
   keywords: []
 ---
@@ -11,7 +11,7 @@
 
 # Thinking in React
 
-This is my version of  [Thinking in React](https://react.dev/learn/thinking-in-react) and the [Tic Tac Toe](https://react.dev/learn/tutorial-tic-tac-toe) tutorial, with Typescript and slot machines.
+In an era dominated by AI agents and vibecoding, mastering the fundamentals has never been more important. That's why I created my own version of [Thinking in React](https://react.dev/learn/thinking-in-react) and the [Tic Tac Toe](https://react.dev/learn/tutorial-tic-tac-toe) tutorial, shorter, easier, with Typescript and slot machines.
 
 Find my code [here](https://stackblitz.com/edit/vitejs-vite-6q5ngvmj?file=README.md)
 
