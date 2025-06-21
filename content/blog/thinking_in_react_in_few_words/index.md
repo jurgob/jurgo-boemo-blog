@@ -20,7 +20,7 @@ Find my code [here](https://stackblitz.com/edit/vitejs-vite-6q5ngvmj?file=README
 ## The "Minimal State" Affair
 
 There's a concept in [Thinking in React](https://react.dev/learn/thinking-in-react) that I think is super important and hard to achieve: **Find the minimal but complete representation of UI state**.
-Everyone agrees with this in principle, yet I see everyone failing. Let's do an example, you want to make a type `user` which has birthDate and the current age. The type is: 
+Everyone agrees with this in principle, yet I see many developers struggling with this. Let's do an example: You want to make a type `user` which has birthDate and the current age. The type is: 
 
 ```ts
 type User = {
@@ -32,7 +32,7 @@ type User = {
 You may start doing something like: 
 
 ```ts
-const user: User ={
+const user: User = {
   birthDate: "2022/11/21",
   age: 2
 }
@@ -72,14 +72,14 @@ If you don't know what a JS getter is [check here](https://developer.mozilla.org
 Now that you know what is a minimal state, let's think about React. Where do you put the state in React? Basically, if you are not using any state manager, you are gonna put it in the hook useState. 
 Now, Let's tackle this challenge: how many useState do you need to implement a Tic Tac Toe? The answer is: "only one and not the one you are probably thinking". 
 
-Now maybe you want to take a break and try to do it by yourself, or you want to read the the [Tic Tac Toe tutorial](https://react.dev/learn/tutorial-tic-tac-toe)  where people with much more patience than me is explaining you step-by-step the thought process you can follow. 
+Now maybe you want to take a break and try to do it by yourself, or you want to read the [Tic Tac Toe tutorial](https://react.dev/learn/tutorial-tic-tac-toe) where people with much more patience than me are explaining you step-by-step the thought process you can follow. 
 
 But here is the response for impatient guys like me: 
 ```ts
   const initialMovesHistory: Move[] = [];
   const [movesHistory, setMoveHistory] = useState(initialMovesHistory);
 ```
-the only thing you need is the history of the moves done for the current game. I swear!. Check the code [here](https://stackblitz.com/edit/vitejs-vite-6q5ngvmj?file=src%2FApp.tsx), open the [App.tsx](https://stackblitz.com/edit/vitejs-vite-6q5ngvmj?file=src%2FApp.tsx) file and see the magic. How is it possible?
+The only thing you need is the history of the moves done for the current game. Trust me on this. Check the code [here](https://stackblitz.com/edit/vitejs-vite-6q5ngvmj?file=src%2FApp.tsx), open the [App.tsx](https://stackblitz.com/edit/vitejs-vite-6q5ngvmj?file=src%2FApp.tsx) file and see the magic. How is it possible?
 
 
 ### Some Types
