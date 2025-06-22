@@ -88,9 +88,9 @@ Here’s the challenge:
 
 The answer: **Only one — and not the one you're probably thinking.**
 
-> 🧠 Want to try it yourself? Or check out the full [Tic Tac Toe tutorial](https://react.dev/learn/tutorial-tic-tac-toe) for a more patient explanation.
+> 🧠 For a more patient explanation, check out the full [Tic Tac Toe tutorial](https://react.dev/learn/tutorial-tic-tac-toe) from the React documentation.
 
-But if you're like me and want the fast version:
+Here it is:
 
 ```ts
   const initialMovesHistory: Move[] = [];
