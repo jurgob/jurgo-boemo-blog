@@ -171,7 +171,10 @@ ul,
 ol {
   margin-left: var(--spacing-0);
   margin-right: var(--spacing-0);
-  padding: var(--spacing-0);
+  padding-left: var(--spacing-8);
+  padding-top: var(--spacing-0);
+  padding-right: var(--spacing-0);
+  padding-bottom: var(--spacing-0);
   margin-bottom: var(--spacing-8);
   list-style-position: outside;
   list-style-image: none;
@@ -243,6 +246,49 @@ a:focus {
 .global-wrapper {
   margin: var(--spacing-0) auto;
   max-width: var(--maxWidth-wrapper);
+}
+
+.global-wrapper[data-is-root-path="false"] {
+  max-width: calc(var(--maxWidth-wrapper) * 2);
+}
+
+.callout-yellow {
+  background: #fff3b0;
+  color: #222;
+  padding: 1.25rem 1.5rem;
+  margin: var(--spacing-6) 0;
+  border-radius: 6px;
+  border-left: 4px solid #e0c200;
+}
+
+.callout-yellow p {
+  margin-bottom: var(--spacing-4);
+}
+
+.callout-yellow ul {
+  margin-bottom: var(--spacing-4);
+}
+
+.callout-yellow li {
+  margin-bottom: var(--spacing-2);
+}
+
+.callout-yellow p:last-child,
+.callout-yellow ul:last-child {
+  margin-bottom: 0;
+}
+
+.callout-yellow h1,
+.callout-yellow h2,
+.callout-yellow h3,
+.callout-yellow h4 {
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-2);
+}
+
+.callout-yellow h1:first-child,
+.callout-yellow h4:first-child {
+  margin-top: 0;
 }
 
 
