@@ -91,9 +91,9 @@ Still Redis, still the same client — just `GET`/`SET`/`EXPIRE` on plain string
 
 | Redis primitive | TS client method | Description |
 |---|---|---|
-| [`GET`](https://redis.io/docs/latest/commands/get/) | [`redisClient.get()`](https://github.com/redis/node-redis/blob/main/packages/client/lib/commands/GET.ts) | Read a plain string key |
-| [`SET`](https://redis.io/docs/latest/commands/set/) | [`redisClient.set()`](https://github.com/redis/node-redis/blob/main/packages/client/lib/commands/SET.ts) | Write a plain string key |
-| [`EXPIRE`](https://redis.io/docs/latest/commands/expire/) | [`redisClient.expire()`](https://github.com/redis/node-redis/blob/main/packages/client/lib/commands/EXPIRE.ts) | Set a TTL on a whole key |
+| [`GET`](https://redis.io/docs/latest/commands/get/) | [`redisClient.get()`](https://github.com/redis/node-redis/tree/master#redis-commands) | Read a plain string key |
+| [`SET`](https://redis.io/docs/latest/commands/set/) | [`redisClient.set()`](https://github.com/redis/node-redis/tree/master#redis-commands) | Write a plain string key |
+| [`EXPIRE`](https://redis.io/docs/latest/commands/expire/) | [`redisClient.expire()`](https://github.com/redis/node-redis/tree/master#redis-commands) | Set a TTL on a whole key |
 
 ## My implementation
 
@@ -105,24 +105,46 @@ We need to use more advanced Redis primitives, and understand them.
 
 | Redis primitive | TS client method | Description |
 |---|---|---|
-| [`HSET`](https://redis.io/docs/latest/commands/hset/) | [`redisClient.hSet()`](https://github.com/redis/node-redis/blob/main/packages/client/lib/commands/HSET.ts) | Write a field inside a hash — if it already exists, it overrides it |
-| [`HGET`](https://redis.io/docs/latest/commands/hget/) | [`redisClient.hGet()`](https://github.com/redis/node-redis/blob/main/packages/client/lib/commands/HGET.ts) | Read one field from a hash |
-| [`HGETALL`](https://redis.io/docs/latest/commands/hgetall/) | [`redisClient.hGetAll()`](https://github.com/redis/node-redis/blob/main/packages/client/lib/commands/HGETALL.ts) | Read every field of a hash |
-| [`HKEYS`](https://redis.io/docs/latest/commands/hkeys/) | [`redisClient.hKeys()`](https://github.com/redis/node-redis/blob/main/packages/client/lib/commands/HKEYS.ts) | List the field names of a hash |
-| [`HSETNX`](https://redis.io/docs/latest/commands/hsetnx/) | [`redisClient.hSetNX()`](https://github.com/redis/node-redis/blob/main/packages/client/lib/commands/HSETNX.ts) | Write a hash field only if it doesn't exist yet — atomic check-and-set |
-| [`HEXPIRE`](https://redis.io/docs/latest/commands/hexpire/) | [`redisClient.hExpire()`](https://github.com/redis/node-redis/blob/main/packages/client/lib/commands/HEXPIRE.ts) | Set a TTL on a single hash field, with `NX`/`XX`/`GT`/`LT` flags |
-| [`MULTI`](https://redis.io/docs/latest/commands/multi/)/[`EXEC`](https://redis.io/docs/latest/commands/exec/) | [`redisClient.multi().exec()`](https://github.com/redis/node-redis/blob/main/docs/transactions.md) | Queue commands and run them as one atomic block |
+| [`HSET`](https://redis.io/docs/latest/commands/hset/) | [`redisClient.hSet()`](https://github.com/redis/node-redis/tree/master#redis-commands) | Write a field inside a hash — if it already exists, it overrides it |
+| [`HGET`](https://redis.io/docs/latest/commands/hget/) | [`redisClient.hGet()`](https://github.com/redis/node-redis/tree/master#redis-commands) | Read one field from a hash |
+| [`HGETALL`](https://redis.io/docs/latest/commands/hgetall/) | [`redisClient.hGetAll()`](https://github.com/redis/node-redis/tree/master#redis-commands) | Read every field of a hash |
+| [`HKEYS`](https://redis.io/docs/latest/commands/hkeys/) | [`redisClient.hKeys()`](https://github.com/redis/node-redis/tree/master#redis-commands) | List the field names of a hash |
+| [`HSETNX`](https://redis.io/docs/latest/commands/hsetnx/) | [`redisClient.hSetNX()`](https://github.com/redis/node-redis/tree/master#redis-commands) | Write a hash field only if it doesn't exist yet — atomic check-and-set |
+| [`HEXPIRE`](https://redis.io/docs/latest/commands/hexpire/) | [`redisClient.hExpire()`](https://github.com/redis/node-redis/tree/master#redis-commands) | Set a TTL on a single hash field, with `NX`/`XX`/`GT`/`LT` flags |
+| [`MULTI`](https://redis.io/docs/latest/commands/multi/)/[`EXEC`](https://redis.io/docs/latest/commands/exec/) | [`redisClient.multi().exec()`](https://github.com/redis/node-redis/tree/master#transactions-multiexec) | Queue commands and run them as one atomic block |
 
 ### holdSeat — atomic claim + expiry
 
 [reservations_client.ts#L50-L76](https://github.com/jurgob/reservation-system/blob/main/src/reservations_client.ts#L50-L76)
 
 ```ts
-const transaction = redisClient.multi()
-transaction.hSetNX(hashKey, seatKey, userId)
-transaction.hExpire(hashKey, seatKey, holdSeatExpiration, "NX")
-const transactionResult = await transaction.exec()
-if (!transactionResult[0]) throw new Error("Seat is already held")
+const holdSeat = async (eventId: EventId, userId: UserId, seatIndex: SeatNumber, holdSeatExpiration?:HoldSeatExpiration|undefined) => {
+    holdSeatExpiration = HoldSeatExpiration.parse(holdSeatExpiration);
+    const seatKey = seatIndex.toString()
+    const hashKey = eventId+":seats"
+    await getEvent(eventId);
+    /* there are 3 possible way to limit a user to have n max seats.
+      1. use a separate hash per user -> this is more performante but it will require more memory
+      2. inside the transation, count the keys that have the user id value -> this is the more correct, but the less performant (the transaction will block the hash for more time)
+      3. do like the point 2, but before the transaction -> this is the middle ground, is not an issue give that the hash can have no more then 1000 keys, also in some edge case the user could be able to require more then n seat, but I thing is the best trade off in this case
+    */
+
+    const hash = await redisClient.hGetAll(hashKey);
+    const userSeatsCount = Object.values(hash).filter(value => value === userId).length;
+
+    if((userSeatsCount+1) > props.userMaxSeats){
+        throw new Error("User has already the maximum number of seats")
+    }
+
+
+    const transaction = redisClient.multi();
+    transaction.hSetNX(hashKey, seatKey, userId);
+    transaction.hExpire(hashKey,seatKey, holdSeatExpiration, "NX");
+    const transactionResult =  await transaction.exec();
+    const holdResult =  transactionResult[0];
+    if(!holdResult)
+        throw new Error("Seat is already held")
+}
 ```
 
 `HSETNX` only sets the field if it's empty; wrapping it in `MULTI`/`EXEC` means no other client can slot in between the set and the expiry.
@@ -132,8 +154,20 @@ if (!transactionResult[0]) throw new Error("Seat is already held")
 [reservations_client.ts#L78-L91](https://github.com/jurgob/reservation-system/blob/main/src/reservations_client.ts#L78-L91)
 
 ```ts
-const [expireResult] = await redisClient.hExpire(hashKey, seatKey, holdSeatExpiration, "GT")
-if (expireResult === 0) throw new Error("Seat has already expired")
+const refreshHoldSeat = async (eventId: EventId, userId: UserId, seatIndex: SeatNumber, holdSeatExpiration?:HoldSeatExpiration|undefined) => {
+    holdSeatExpiration = HoldSeatExpiration.parse(holdSeatExpiration);
+    const seatKey = seatIndex.toString()
+    const hashKey = eventId+":seats"
+    const holdSeat = await redisClient.hGet(hashKey, seatKey);
+    if(typeof holdSeat !== "string" ||holdSeat !== userId){
+        throw new Error("Seat is not held by user")
+    }
+
+    const [expireResult] = await redisClient.hExpire(hashKey,seatKey, holdSeatExpiration, "GT");
+    if(expireResult === 0){
+        throw new Error("Seat has already expired")
+    }
+}
 ```
 
 `GT` only applies the new TTL if it's *greater* than the current one — a refresh can't accidentally shorten a hold.
@@ -143,9 +177,17 @@ if (expireResult === 0) throw new Error("Seat has already expired")
 [reservations_client.ts#L93-L103](https://github.com/jurgob/reservation-system/blob/main/src/reservations_client.ts#L93-L103)
 
 ```ts
-const holdSeat = await redisClient.hGet(hashKey, seatKey)
-if (holdSeat !== userId) throw new Error("Seat is not held by user")
-await redisClient.hExpire(hashKey, seatKey, HOLD_SEAT_EXPIRATION_DONOT_EXPIRE, "XX")
+const reserveSeat = async (eventId: EventId, userId: UserId, seatIndex:SeatNumber) => {
+    const seatKey = seatIndex.toString()
+    const hashKey = eventId+":seats"
+    const holdSeat = await redisClient.hGet(hashKey, seatKey);
+    if(typeof holdSeat !== "string" ||holdSeat !== userId){
+        throw new Error("Seat is not held by user")
+    }
+    await redisClient.hExpire(hashKey,seatKey, HOLD_SEAT_EXPIRATION_DONOT_EXPIRE, "XX");
+    // await redisClient.hPersist(hashKey, seatKey);
+
+}
 ```
 
 A "permanent" reservation is a TTL of 100 years, not `PERSIST` — that keeps the field lockable by `HSETNX` for the whole hold/reserve lifecycle.
@@ -155,8 +197,15 @@ A "permanent" reservation is a TTL of 100 years, not `PERSIST` — that keeps th
 [reservations_client.ts#L112-L120](https://github.com/jurgob/reservation-system/blob/main/src/reservations_client.ts#L112-L120)
 
 ```ts
-const seatsNotAvailable = await redisClient.hKeys(hashKey)
-return allSeatNumbers.filter(seat => !seatsNotAvailable.includes(seat))
+const getAvailableSeats = async (eventId: EventId): Promise<SeatNumber[]> => {
+    const totalSeatsString = await redisClient.hGet(eventId, "totalSeats");
+    const totalSeats = SeatCounter.parse(parseInt(totalSeatsString||""));
+    const hashKey = eventId+":seats"
+    const seatsNotAvailable = await redisClient.hKeys(hashKey);
+    const potentialAvailableSeatch = Array.from({"length": totalSeats}, (_,i) => `${i+1}`)
+    return potentialAvailableSeatch.filter(seat => !seatsNotAvailable.includes(seat)).map(seat => SeatNumber.parse(seat));
+
+}
 ```
 
 ## The tests that prove the point
